@@ -5,12 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<form action="" th:action=@{/article_post} method="post">
+<form action="" th:action="@{/bbs/article_post}" th:object="${articleForm}" method="post">
     <span>投稿者名:</span>
-    <input type="text" name="name" id="name">
+    <input type="text" name="name" th:field="*{name}" id="name">
     <br>
     <span>投稿内容</span>
-    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    <textarea name="content" th:field="*{content}" id="content" cols="30" rows="10"></textarea>
     <br>
     <button type="submit">記事投稿</button>
 </form>

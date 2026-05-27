@@ -1,7 +1,9 @@
 package com.example.controller;
 
 import com.example.domain.Article;
+import com.example.form.ArticleForm;
 import com.example.repository.ArticleRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,7 @@ public class ArticleController {
     private ArticleRepository repository;
 
     @GetMapping("")
-    public String index(Model model) {
+    public String index(ArticleForm articleForm, Model model) {
         List<Article> articles = repository.findAll();
         System.out.println("記事一覧:" + articles);
         model.addAttribute("articles", articles);
@@ -31,7 +33,11 @@ public class ArticleController {
     }
 
     @PostMapping("/article_post")
-    public String articlePost() {
-        return null;
+    public String articlePost(ArticleForm articleForm) {
+        Article article = new Article();
+        BeanUtils.copyProperties(articleForm, article);
+
+        repository.insert(article);
+        return "redirect:/bbs";
     }
 }
